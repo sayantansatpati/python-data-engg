@@ -10,7 +10,7 @@ from boto.s3.connection import S3Connection
 
 # In[ ]:
 
-conn = S3Connection('AKIAJFBG7KZDYBFM3HBA', 'iKucsLWltkP0UuYrazaf010bBvgnK2pi5RnEDpRm')
+conn = S3Connection('', '')
 
 
 # ## Alternative is  conn = boto.connect_s3()

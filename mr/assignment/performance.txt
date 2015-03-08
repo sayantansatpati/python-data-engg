@@ -1,0 +1,14 @@
+Doors, The	1362620749	50
+Led Zeppelin	1362620750	12
+Stevie Wonder	1362620749	5
+Wonder, Stevie	1428439983	10
+Beatles	1362620750	1
+The Beatles	1362620750	250
+The Beatle 	1428439983  	25
+Ben Harper	1362620749	3
+Ben Harper & The Innocent Criminals	1362620749	10
+Ben Harper and the Innocent Criminals	1362620749	1
+Ben Harper; the Innocent Criminals	1428439983	7
+The Foo Fighters	1362620749	1
+Foo Bar Fighters	1362620749	1
+Bar Foo Fighters	1362620749	1

@@ -42,4 +42,4 @@ def bs():
 if __name__ == '__main__':
     bs()
     #xml()
-    #json()
+    json()
