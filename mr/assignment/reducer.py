@@ -3,7 +3,7 @@ __author__ = 'ssatpati'
 
 import sys
 
-last_comp_key = None
+last_key = None
 last_artist = None
 last_date = None
 
@@ -21,16 +21,14 @@ for line in sys.stdin:
          # remove leading and trailing whitespace
         line = line.strip()
         # Split the line into tokens
-        (comp_key, artist, perf_per_day) = line.split('\t')
-        # Split the sorted compound key
-        (key, dt) = comp_key.split('^')
+	(key, dt, artist, perf_per_day) = line.split('^')
 
-        if comp_key != last_comp_key:
-            if last_comp_key:
+        if key != last_key:
+            if last_key:
                 # Emit
                 emit()
             # Reset
-            last_comp_key = comp_key;
+            last_key = key;
             last_date = dt;
             last_artist = artist
             total_performances = int(perf_per_day)

@@ -59,7 +59,7 @@ for line in sys.stdin:
             value = dict_artist.get(key)
             if value is not None:
                 dt = datetime.fromtimestamp(long(tokens[1])).strftime(DATE_TIME_FORMAT)
-                print("{0}^{1}\t{2}\t{3}".format(key, dt, value, tokens[2]))
+                print("{0}^{1}^{2}^{3}".format(key, dt, value, tokens[2]))
     except:
         print("[Mapper] Ignoring record: {0}".format(line))
         pass
