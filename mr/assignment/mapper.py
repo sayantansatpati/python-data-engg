@@ -9,7 +9,7 @@ import pprint
 from datetime import datetime
 
 # NLTK
-os.environ["NLTK_DATA"] = "/Users/ssatpati/nltk_data"
+os.environ["NLTK_DATA"] = "/home/cloudera/nltk_data"
 sw = stopwords.words('english')
 
 DATE_TIME_FORMAT = "%Y-%m-%d"
