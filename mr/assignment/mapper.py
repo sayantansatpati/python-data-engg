@@ -14,6 +14,8 @@ sw = stopwords.words('english')
 
 DATE_TIME_FORMAT = "%Y-%m-%d"
 
+CACHE_FILE = "artist_band.txt"
+
 '''
 Dictionary to hold the master list of artist/band names
 Will be loaded by each mapper for mapper side join (Distributed Cache)
@@ -33,6 +35,10 @@ def tokenize_stem(word):
     tkns = sorted(tkns)
     return tuple(tkns)
 
+with open(CACHE_FILE) as f:
+    for l in f:
+        l = l.strip()
+        dict_artist[tokenize_stem(l)] = l
 
 # input comes from STDIN (standard input)
 for line in sys.stdin:
@@ -42,9 +48,11 @@ for line in sys.stdin:
         # split the line into tokens
         tokens = line.split('\t')
 
+        '''
         # Load master list of artist/band names
         if tokens and len(tokens) == 1:
             dict_artist[tokenize_stem(tokens[0])] = tokens[0]
+        '''
 
         if len(tokens) == 3:
             key = tokenize_stem(tokens[0])
