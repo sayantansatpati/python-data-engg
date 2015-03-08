@@ -1,0 +1,84 @@
+#######
+Report
+#######
+
+Problem has been solved using Haoop Streaming(Python). 
+
+Mapper File: mapper.py
+Reducer File: reducer.py
+Master List of Artist/Bands: artist_band.txt
+Performance of Artist/Bands per Date: performance.txt
+
+[cloudera@localhost assignment]$ ls -l
+total 20
+-rw-rw-r-- 1 cloudera cloudera  110 Mar  7 22:56 artist_band.txt
+-rwxrwxr-x 1 cloudera cloudera 1781 Mar  7 22:56 mapper.py
+-rw-rw-r-- 1 cloudera cloudera  447 Mar  7 22:56 performance.txt
+-rwxrwxr-x 1 cloudera cloudera 1341 Mar  7 22:56 reducer.py
+
+Testing in local:
+=================
+
+[cloudera@localhost assignment]$ cat performance.txt | python mapper.py | sort -k 1 | python reducer.py 
+The Beatles	2013-03-06	251
+The Beatles	2015-04-07	25
+Ben Harper & The Innocent Criminals	2013-03-06	11
+Ben Harper & The Innocent Criminals	2015-04-07	7
+Ben Harper	2013-03-06	3
+The Doors	2013-03-06	50
+Foo Fighters	2013-03-06	1
+Led Zeppelin	2013-03-06	12
+Stevie Wonder	2013-03-06	5
+Stevie Wonder	2015-04-07	10
+
+Testing in Hadoop Cluster (Cloudera CDH4.7 VirtualBox VM):
+=========================================================
+
+hadoop fs -rm -r -skipTrash /user/cloudera/assignment1/output;hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.7.0.jar -D stream.map.output.field.separator=^ -D stream.num.map.output.key.fields=2 -D map.output.key.field.separator=^ -D mapred.text.key.partitioner.options=-k1,1 -D mapred.reduce.tasks=3 -input /user/cloudera/assignment1/input/performance.txt -output /user/cloudera/assignment1/output -mapper 'mapper.py' -reducer 'reducer.py' -file ./mapper.py -file ./reducer.py -file ./artist_band.txt -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+
+# Files from 3 Reducers
+
+[cloudera@localhost assignment]$ hadoop fs -ls /user/cloudera/assignment1/output
+Found 5 items
+-rw-r--r--   3 cloudera cloudera          0 2015-03-07 23:36 /user/cloudera/assignment1/output/_SUCCESS
+drwxr-xr-x   - cloudera cloudera          0 2015-03-07 23:35 /user/cloudera/assignment1/output/_logs
+-rw-r--r--   3 cloudera cloudera        200 2015-03-07 23:36 /user/cloudera/assignment1/output/part-00000
+-rw-r--r--   3 cloudera cloudera         55 2015-03-07 23:36 /user/cloudera/assignment1/output/part-00001
+-rw-r--r--   3 cloudera cloudera         53 2015-03-07 23:36 /user/cloudera/assignment1/output/part-00002
+
+# Contents of each File (Total # of Performances by Artist & Date)
+
+[cloudera@localhost assignment]$ hadoop fs -cat /user/cloudera/assignment1/output/part-00000
+Ben Harper & The Innocent Criminals	2013-03-06	11
+Ben Harper & The Innocent Criminals	2015-04-07	7
+Ben Harper	2013-03-06	3
+The Doors	2013-03-06	50
+Foo Fighters	2013-03-06	1
+Led Zeppelin	2013-03-06	12
+[cloudera@localhost assignment]$ hadoop fs -cat /user/cloudera/assignment1/output/part-00001
+Stevie Wonder	2013-03-06	5
+Stevie Wonder	2015-04-07	10
+[cloudera@localhost assignment]$ hadoop fs -cat /user/cloudera/assignment1/output/part-00002
+The Beatles	2013-03-06	251
+The Beatles	2015-04-07	25
+
+hadoop fs -rm -r -skipTrash /user/cloudera/assignment1/output;hadoop jar /usr/lib/hadoop-0.20-mapreduce/contrib/streaming/hadoop-streaming-2.0.0-mr1-cdh4.7.0.jar -D stream.map.output.field.separator=^ -D stream.num.map.output.key.fields=2 -D map.output.key.field.separator=^ -D mapred.text.key.partitioner.options=-k1,1 -input /user/cloudera/assignment1/input/performance.txt -output /user/cloudera/assignment1/output -mapper 'mapper.py' -reducer 'reducer.py' -file ./mapper.py -file ./reducer.py -file ./artist_band.txt -partitioner org.apache.hadoop.mapred.lib.KeyFieldBasedPartitioner
+
+
+# Output from 1 Reducer (Total # of Performances by Artist & Date)
+
+[cloudera@localhost assignment]$ hadoop fs -cat /user/cloudera/assignment1/output/part-00000
+The Beatles	2013-03-06	251
+The Beatles	2015-04-07	25
+Ben Harper & The Innocent Criminals	2013-03-06	11
+Ben Harper & The Innocent Criminals	2015-04-07	7
+Ben Harper	2013-03-06	3
+The Doors	2013-03-06	50
+Foo Fighters	2013-03-06	1
+Led Zeppelin	2013-03-06	12
+Stevie Wonder	2013-03-06	5
+Stevie Wonder	2015-04-07	10
+
+
+
+
