@@ -11,10 +11,11 @@
 4. Mapper emits records as <Normalized Artist Name>^<DATE:YYYY-MM-DD)^<Artist Name>^<Performance>.
 5. Record from Mapper: ('beatl',)^2013-03-06^The Beatles^1
 7. The entire record is treated as a key so everything is sorted when it arrives at the Reducer
-8. Other possible approach could have been to treat ('beatl',)^2013-03-06 as key and rest as value
-8. Partitioning is done only on the first token (Normalized Artist Name), which 1) ensures a better distribution of keys
-based only on normalized Artist Name & 2) All records for same Artist end up in same reducer
-6. Reducer Aggregates the Total Performances for each <Normalized Artist Name>^<DATE:YYYY-MM-DD) combination
+8. Other possible approach could have been to treat ('beatl',)^2013-03-06 as the key and rest as value. This approach would 
+have sorted only the Normalized Artist Name and Date, but would have generated more data and IO between Mappers and Reducers 
+9. Partitioning is done only on the first token (Normalized Artist Name) ensuring 1) better distribution of keys
+based only on normalized Artist Name and 2) All records for same Artist end up in same reducer 
+10. Reducer Aggregates the Total Performances for each <Normalized Artist Name>^<DATE:YYYY-MM-DD) combination
 
 ## NLTK
 
@@ -23,7 +24,8 @@ based only on normalized Artist Name & 2) All records for same Artist end up in 
 1. Each Artist name is first tokenized by removing the white spaces and other special characters (-, & etc).
 2. Stop words are removed ('A', 'The', 'and' etc). NLTK corpora has an exhaustive list of stopwords.
 3. Each word is then stemmed, or reduced to its Base/Root Form using the LancasterStemmer
-4. Tokens are then sorted for final apple to apple comparison between Master List & Performance Data
+4. Tokens are then sorted for final apple to apple comparison between Master List and Performance Data
+
 
 - Mapper File: mapper.py
 - Reducer File: reducer.py
