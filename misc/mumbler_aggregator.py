@@ -12,7 +12,7 @@ ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
 def aggregate(hosts, zip_dir=ZIP_DIR):
     l = []
     for h in hosts.split(","):
-        f_name = "".join(["h", "_counts.p"])
+        f_name = "".join([h, "_counts.p"])
         l.append(pickle.load(open(os.path.join(ZIP_DIR, OUT_DIR, f_name))))
     for d in l:
         pprint.pprint(d)
