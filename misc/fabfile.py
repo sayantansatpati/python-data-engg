@@ -1,0 +1,57 @@
+__author__ = 'ssatpati'
+from fabric.api import *
+
+import pprint
+import glob
+import zipfile
+import time
+import sys
+from collections import defaultdict
+from pprint import pprint
+
+gpfs1 = '50.97.213.6'
+gpfs2 = '50.97.213.3'
+gpfs3 = '108.168.236.146'
+
+env.hosts = [gpfs1, gpfs2, gpfs3]
+env.user = "root"
+#env.key_filename = "/Users/ssatpati/0-DATASCIENCE/DEV/SL/keys/npp/id_rsa"
+env.key_filename = "/root/.ssh/id_rsa"
+
+m = 1000000
+root = "/gpfs/gpfsfpo/ngrams"
+
+@task
+@parallel
+def mumbler_task(word1):
+    print("@@@ Executing on %s as %s @@@" % (env.host, env.user))
+    run("ls -l")
+    # Pattern Passed based on FileName to ensure hosts process local files in the order they were downloaded
+    if env.host == gpfs1:
+        cmd = ["python", "mumbler.py", word1, root, "{0..33}", env.host]
+        with cd(root):
+            run(" ".join(cmd))
+    elif env.host == gpfs2:
+        cmd = ["python", "mumbler.py", word1, root, "{34..66}", env.host]
+        with cd(root):
+            run(" ".join(cmd))
+    elif env.host == gpfs3:
+        cmd = ["python", "mumbler.py", word1, root, "{67..99}", env.host]
+        with cd(root):
+            run(" ".join(cmd))
+    else:
+        raise Exception("Illegal Host, Aborting!!!")
+
+@task
+@runs_once
+def aggregate():
+    with cd("/gpfs/gpfsfpo/ngrams"):
+        run("ls -l")
+
+
+def controller():
+    execute(mumbler_task, word1="!")
+    execute(aggregate)
+
+if __name__ == '__main__':
+    controller()
