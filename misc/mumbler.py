@@ -33,7 +33,7 @@ def mumbler(word1, pattern, zip_dir=ZIP_DIR):
     #zip_pattern = os.path.join(zip_dir, "".join(glob_pattern))
     #print("ZIP File Pattern: {0}".format(zip_pattern))
 
-    for g in f_list;
+    for g in f_list:
     #for g in glob.glob(zip_pattern):
         print(g)
         with contextlib.closing(zipfile.ZipFile(g, "r")) as z:
