@@ -13,19 +13,28 @@ from pprint import pprint
 OUT_DIR = "output"
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
 
+
 m = 1000000
+ZIP_FILE = "googlebooks-eng-all-2gram-20090715-{0}.csv.zip"
 
 
 def mumbler(word1, pattern, zip_dir=ZIP_DIR):
+    # Create the Files to be processed based on Pattern
+    t = pattern.split(":")
+    f_list = []
+    for i in xrange(int(t[0]), int(t[1]) + 1):
+        f_list.append(os.path.join(zip_dir, ZIP_FILE.format(i)))
+
     # Dict word:counts for All Zip Files
     dd = defaultdict(int)
 
     # All Zips in this Dir
-    glob_pattern = ["googlebooks-eng-all-2gram-20090715-", pattern, ".csv.zip"]
-    zip_pattern = os.path.join(zip_dir, "".join(glob_pattern))
-    print("ZIP File Pattern: {0}".format(zip_pattern))
+    #glob_pattern = ["googlebooks-eng-all-2gram-20090715-", pattern, ".csv.zip"]
+    #zip_pattern = os.path.join(zip_dir, "".join(glob_pattern))
+    #print("ZIP File Pattern: {0}".format(zip_pattern))
 
-    for g in glob.glob(zip_pattern):
+    for g in f_list;
+    #for g in glob.glob(zip_pattern):
         print(g)
         with contextlib.closing(zipfile.ZipFile(g, "r")) as z:
         #with zipfile.ZipFile(g) as z:
