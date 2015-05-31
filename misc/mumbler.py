@@ -10,10 +10,13 @@ from collections import defaultdict
 import contextlib
 from pprint import pprint
 
+OUT_DIR = "output"
+ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
+
 m = 1000000
 
 
-def mumbler(word1, pattern, zip_dir="/gpfs/gpfsfpo/ngrams"):
+def mumbler(word1, pattern, zip_dir=ZIP_DIR):
     # Dict word:counts for All Zip Files
     dd = defaultdict(int)
 
@@ -76,10 +79,15 @@ if __name__ == '__main__':
     if len(sys.argv) < 5:
         raise Exception("Illegal Number of Arguments Passed: " + len(sys.argv))
 
+    #Output Directory
+    output_dir = os.path.join(sys.argv[3], OUT_DIR)
+    if os.path.exists(os.path.join(sys.argv[3], OUT_DIR)):
+        os.makedirs(output_dir)
+
     s = time.time()
     # Invoke Mumbler
     dd = mumbler(word1=sys.argv[1], zip_dir=sys.argv[2], pattern=sys.argv[3])
     # Pickle Dump
-    pickle.dump(dd, open(sys.argv[4] + "_counts.p", "wb"))
+    pickle.dump(dd, open(os.path.join(output_dir, sys.argv[4] + "_counts.p"), "wb"))
     e = time.time()
     print("Time Taken(m): {0}".format(e-s))
