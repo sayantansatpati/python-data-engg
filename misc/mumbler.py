@@ -88,9 +88,9 @@ if __name__ == '__main__':
     if len(sys.argv) < 5:
         raise Exception("Illegal Number of Arguments Passed: " + len(sys.argv))
 
-    #Output Directory
-    output_dir = os.path.join(sys.argv[3], OUT_DIR)
-    if os.path.exists(os.path.join(sys.argv[3], OUT_DIR)):
+    # Create Output Directory
+    output_dir = os.path.join(sys.argv[2], OUT_DIR)
+    if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
     s = time.time()
