@@ -20,22 +20,24 @@ env.user = "root"
 env.key_filename = "/root/.ssh/id_rsa"
 
 m = 1000000
-root = "/gpfs/gpfsfpo/ngrams"
+ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
+SCRIPT_DIR = "/gpfs/gpfsfpo/python-data-load-store/misc/"
 
 @task
 @parallel
 def mumbler_task(word1):
     print("@@@ Executing on %s as %s @@@" % (env.host, env.user))
+    run("pwd")
     run("ls -l")
     # Pattern Passed based on FileName to ensure hosts process local files in the order they were downloaded
     if env.host == gpfs1:
-        cmd = ["python", "mumbler.py", word1, root, "{0..33}", env.host]
+        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{0..33}", env.host]
         run(" ".join(cmd))
     elif env.host == gpfs2:
-        cmd = ["python", "mumbler.py", word1, root, "{34..66}", env.host]
+        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{34..66}", env.host]
         run(" ".join(cmd))
     elif env.host == gpfs3:
-        cmd = ["python", "mumbler.py", word1, root, "{67..99}", env.host]
+        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{67..99}", env.host]
         run(" ".join(cmd))
     else:
         raise Exception("Illegal Host, Aborting!!!")
