@@ -30,23 +30,20 @@ def mumbler_task(word1):
     # Pattern Passed based on FileName to ensure hosts process local files in the order they were downloaded
     if env.host == gpfs1:
         cmd = ["python", "mumbler.py", word1, root, "{0..33}", env.host]
-        with cd(root):
-            run(" ".join(cmd))
+        run(" ".join(cmd))
     elif env.host == gpfs2:
         cmd = ["python", "mumbler.py", word1, root, "{34..66}", env.host]
-        with cd(root):
-            run(" ".join(cmd))
+        run(" ".join(cmd))
     elif env.host == gpfs3:
         cmd = ["python", "mumbler.py", word1, root, "{67..99}", env.host]
-        with cd(root):
-            run(" ".join(cmd))
+        run(" ".join(cmd))
     else:
         raise Exception("Illegal Host, Aborting!!!")
 
 @task
 @runs_once
 def aggregate():
-    with cd("/gpfs/gpfsfpo/ngrams"):
+    with cd("/gpfs/gpfsfpo/ngrams/output"):
         run("ls -l")
 
 
