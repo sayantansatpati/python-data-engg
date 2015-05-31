@@ -4,6 +4,8 @@ import os
 import sys
 import pickle
 import pprint
+from collections import defaultdict
+from itertools import chain
 
 OUT_DIR = "output"
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
@@ -14,8 +16,12 @@ def aggregate(hosts, zip_dir=ZIP_DIR):
     for h in hosts.split(","):
         f_name = "".join([h, "_counts.p"])
         l.append(pickle.load(open(os.path.join(ZIP_DIR, OUT_DIR, f_name))))
-    for d in l:
-        pprint.pprint(d)
+
+    dd_merged = defaultdict(int)
+    for k,v in chain([dd.iteritems() for dd in l]):
+        dd_merged[k].update(v)
+
+    pprint.pprint(dd_merged)
 
 
 if __name__ == '__main__':
