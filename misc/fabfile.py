@@ -31,14 +31,17 @@ def mumbler_task(word1):
     run("ls -l")
     # Pattern Passed based on FileName to ensure hosts process local files in the order they were downloaded
     if env.host == gpfs1:
-        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{0..33}", env.host]
-        run(" ".join(cmd))
+        cmd = ["python", "mumbler.py", word1, ZIP_DIR, "{0..33}", env.host]
+        with cd(SCRIPT_DIR):
+            run(" ".join(cmd))
     elif env.host == gpfs2:
-        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{34..66}", env.host]
-        run(" ".join(cmd))
+        cmd = ["python", "mumbler.py", word1, ZIP_DIR, "{34..66}", env.host]
+        with cd(SCRIPT_DIR):
+            run(" ".join(cmd))
     elif env.host == gpfs3:
-        cmd = ["python", SCRIPT_DIR + "mumbler.py", word1, ZIP_DIR, "{67..99}", env.host]
-        run(" ".join(cmd))
+        cmd = ["python", "mumbler.py", word1, ZIP_DIR, "{67..99}", env.host]
+        with cd(SCRIPT_DIR):
+            run(" ".join(cmd))
     else:
         raise Exception("Illegal Host, Aborting!!!")
 
