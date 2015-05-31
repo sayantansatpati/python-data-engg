@@ -99,4 +99,4 @@ if __name__ == '__main__':
     # Pickle Dump
     pickle.dump(dd, open(os.path.join(output_dir, sys.argv[4] + "_counts.p"), "wb"))
     e = time.time()
-    print("Time Taken(m): {0}".format(e-s))
+    print("Time Taken(s): {0}".format(e-s))

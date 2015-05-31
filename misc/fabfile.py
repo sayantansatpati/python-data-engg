@@ -51,6 +51,10 @@ def aggregate():
     with cd("/gpfs/gpfsfpo/ngrams/output"):
         run("ls -l")
 
+    cmd = ["python", "mumbler_aggregator.py", ZIP_DIR, ",".join(env.host)]
+    with cd(SCRIPT_DIR):
+        run(" ".join(cmd))
+
 
 def controller():
     execute(mumbler_task, word1="!")
