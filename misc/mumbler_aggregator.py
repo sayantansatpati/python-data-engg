@@ -11,7 +11,7 @@ OUT_DIR = "output"
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
 
 
-def aggregate(hosts, zip_dir=ZIP_DIR):
+def aggregate(word1, hosts, zip_dir=ZIP_DIR):
     l = []
     for h in hosts.split(","):
         f_name = "".join([h, "_counts.p"])
@@ -22,13 +22,17 @@ def aggregate(hosts, zip_dir=ZIP_DIR):
         dd_merged[k] += v
 
     pprint.pprint(dd_merged)
+    print(l[0].get(word1))
+    print(l[1].get(word1))
+    print(l[2].get(word1))
+    print(dd_merged.get(word1))
 
 
 if __name__ == '__main__':
     print 'Number of arguments:', len(sys.argv), 'arguments.'
     print 'Argument List:', str(sys.argv)
 
-    if len(sys.argv) < 3:
+    if len(sys.argv) < 4:
         raise Exception("Illegal Number of Arguments Passed: " + len(sys.argv))
 
-    aggregate(zip_dir=sys.argv[1], hosts=sys.argv[2])
+    aggregate(word1=sys.argv[1], zip_dir=sys.argv[2], hosts=sys.argv[3])

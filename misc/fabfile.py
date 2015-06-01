@@ -47,18 +47,18 @@ def mumbler_task(word1):
 
 @task
 @runs_once
-def aggregate():
+def aggregate(word1):
     with cd("/gpfs/gpfsfpo/ngrams/output"):
         run("ls -l")
 
-    cmd = ["python", "mumbler_aggregator.py", ZIP_DIR, ",".join(env.hosts)]
+    cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(env.hosts)]
     with cd(SCRIPT_DIR):
         run(" ".join(cmd))
 
 
 def controller():
     execute(mumbler_task, word1="!")
-    execute(aggregate)
+    execute(aggregate, word1="!")
 
 if __name__ == '__main__':
     controller()
