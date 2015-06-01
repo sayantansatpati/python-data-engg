@@ -46,6 +46,10 @@ def preproc(pattern, zip_dir=ZIP_DIR):
                         if not bigram or len(bigram) == 0:
                             continue
 
+                        print line
+                        print bigram
+                        print bigram[0], bigram[1]
+
                         try:
                             dd[bigram[0]][COUNT_KEY] += 1
                             if len(bigram) == 2:
