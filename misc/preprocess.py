@@ -20,6 +20,7 @@ m = 1000000
 dd = defaultdict(lambda: defaultdict(int))
 
 def populate_counts(pattern, zip_dir=ZIP_DIR):
+    s = time.time()
     # Create the Files to be processed based on Pattern
     t = pattern.split(":")
     f_list = []
@@ -58,10 +59,12 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
                         if cnt % m == 0:
                             print("No. of lines read in file {0}: {1}]".format(zf.filename, cnt))
                             print("DefaultDict(counts), Length: {0}, Size: {1}".format(len(dd), sys.getsizeof(dd)))
+                            e = time.time()
+                            print("Time Taken(s) so far: {0}".format(e-s))
 
                         # For Test
-                        if cnt > (5 * m):
-                            return
+                        #if cnt > (5 * m):
+                        #    return
 
 
 def persist_counts(out_dir, zip_dir=ZIP_DIR):
