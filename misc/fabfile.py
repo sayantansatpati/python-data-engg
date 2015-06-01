@@ -1,14 +1,7 @@
 __author__ = 'ssatpati'
 
 from fabric.api import *
-
-import pprint
-import glob
-import zipfile
 import time
-import sys
-from collections import defaultdict
-from pprint import pprint
 
 gpfs1 = '50.97.213.6'
 gpfs2 = '50.97.213.3'
@@ -52,8 +45,11 @@ def mumbler_task(word1):
 @runs_once
 @hosts(gpfs1)
 def aggregate(word1):
+    with cd("/gpfs/gpfsfpo"):
+        run("du -sm")
+
     with cd("/gpfs/gpfsfpo/ngrams/output"):
-        run("ls -l")
+        run("ls -lh")
 
     cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(HOSTS)]
     with cd(SCRIPT_DIR):
@@ -64,11 +60,15 @@ def aggregate(word1):
 
 
 def controller():
+    # Initialize
     word1 = "!"
     while word1 is not None or len(word1) != 0:
+        s = time.time()
         execute(mumbler_task, word1=word1)
         results = execute(aggregate, word1=word1)
         word1 = results[gpfs1].split("\t")[2]
+        e = time.time()
+        print("Word: {0}, Time Taken(s): {0}".format(word1, e-s))
         print("Word for Next Iteration: {0}".format(word1))
 
 

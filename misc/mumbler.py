@@ -93,10 +93,7 @@ if __name__ == '__main__':
     if not os.path.exists(output_dir):
         os.makedirs(output_dir)
 
-    s = time.time()
     # Invoke Mumbler
     dd = mumbler(word1=sys.argv[1], zip_dir=sys.argv[2], pattern=sys.argv[3])
     # Pickle Dump
     pickle.dump(dd, open(os.path.join(output_dir, sys.argv[4] + "_counts.p"), "wb"))
-    e = time.time()
-    print("Time Taken(s): {0}".format(e-s))
