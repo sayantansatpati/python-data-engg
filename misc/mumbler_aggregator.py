@@ -19,7 +19,7 @@ def aggregate(hosts, zip_dir=ZIP_DIR):
 
     dd_merged = defaultdict(int)
     for k,v in chain(l[0].iteritems(), l[1].iteritems(), l[2].iteritems()):
-        dd_merged[k].update(v)
+        dd_merged[k] += v
 
     pprint.pprint(dd_merged)
 
