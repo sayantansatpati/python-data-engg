@@ -41,7 +41,7 @@ def aggregate(word1, hosts, zip_dir=ZIP_DIR):
 
     # Write to Output File
     with open(os.path.join(ZIP_DIR, OUT_DIR, OUT_FILE), "w") as f:
-        f.write("%s\t%s\t%s\t%s\t%s" %(word1, dd_merged.get(word1), random_key, random_key_value, probability))
+        f.write("%s\t%s\t%s\t%s\t%s\n" %(word1, dd_merged.get(word1), random_key, random_key_value, probability))
 
 
 if __name__ == '__main__':
