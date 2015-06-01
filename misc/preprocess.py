@@ -27,7 +27,7 @@ def preproc(pattern, zip_dir=ZIP_DIR):
         f_list.append(os.path.join(zip_dir, ZIP_FILE.format(i)))
 
     # Dict word:counts for All Zip Files
-    dd = defaultdict(int)
+    dd = defaultdict(lambda: defaultdict(int))
 
     for g in f_list:
         print(g)
