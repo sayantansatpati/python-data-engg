@@ -8,8 +8,10 @@ from collections import defaultdict
 from itertools import chain
 import random
 
-OUT_DIR = "output"
+
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
+OUT_DIR = "output"
+OUT_FILE = "mumbler_output.txt"
 
 
 def aggregate(word1, hosts, zip_dir=ZIP_DIR):
@@ -32,11 +34,14 @@ def aggregate(word1, hosts, zip_dir=ZIP_DIR):
 
     random_key = random.choice(dd_merged.keys())
     random_key_value = dd_merged.get(random_key)
+    probability = (random_key_value * 1.0)/dd_merged.get(word1)
     print("Random Key: {0}, Value: {1}, Probability: {2}".format(random_key,
                                                                  random_key_value,
-                                                                 (random_key_value * 1.0)/dd_merged.get(word1)))
-    # Returns the random_key for next iteration
-    return random_key
+                                                                 probability))
+
+    # Write to Output File
+    with open(os.path.join(ZIP_DIR, OUT_DIR, OUT_FILE), "w") as f:
+        f.write("%s\t%s\t%s\t%s\t%s" %(word1, dd_merged.get(word1), random_key, random_key_value, probability))
 
 
 if __name__ == '__main__':

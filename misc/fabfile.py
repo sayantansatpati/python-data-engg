@@ -14,7 +14,7 @@ gpfs1 = '50.97.213.6'
 gpfs2 = '50.97.213.3'
 gpfs3 = '108.168.236.146'
 
-env.hosts = [gpfs1, gpfs2, gpfs3]
+HOSTS = [gpfs1, gpfs2, gpfs3]
 env.user = "root"
 #env.key_filename = "/Users/ssatpati/0-DATASCIENCE/DEV/SL/keys/npp/id_rsa"
 env.key_filename = "/root/.ssh/id_rsa"
@@ -23,8 +23,10 @@ m = 1000000
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
 SCRIPT_DIR = "/gpfs/gpfsfpo/python-data-load-store/misc/"
 
+
 @task
 @parallel
+@hosts(gpfs1, gpfs2, gpfs3)
 def mumbler_task(word1):
     print("@@@ Executing on %s as %s @@@" % (env.host, env.user))
     run("pwd")
@@ -45,15 +47,20 @@ def mumbler_task(word1):
     else:
         raise Exception("Illegal Host, Aborting!!!")
 
+
 @task
 @runs_once
+@hosts(gpfs1)
 def aggregate(word1):
     with cd("/gpfs/gpfsfpo/ngrams/output"):
         run("ls -l")
 
-    cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(env.hosts)]
+    cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(HOSTS)]
     with cd(SCRIPT_DIR):
-        return run(" ".join(cmd))
+        run(" ".join(cmd))
+
+    with cd("/gpfs/gpfsfpo/ngrams/output"):
+        return run("tail -1 mumbler_output.txt")
 
 
 def controller():
