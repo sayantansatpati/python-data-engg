@@ -49,9 +49,13 @@ def preproc(pattern, zip_dir=ZIP_DIR):
                         if not bigram or len(bigram) == 0:
                             continue
 
-                        dd[bigram[0]][COUNT_KEY] += 1
-                        if len(bigram) == 2:
-                                dd[bigram[0]][bigram[1]] += tokens[2]
+                        try:
+                            dd[bigram[0]][COUNT_KEY] += 1
+                            if len(bigram) == 2:
+                                    dd[bigram[0]][bigram[1]] += int(tokens[2])
+                        except Exception as e:
+                                print line
+                                print e
 
                         cnt += 1
                         if cnt % m == 0:
