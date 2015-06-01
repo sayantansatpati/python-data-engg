@@ -67,7 +67,8 @@ def controller():
     word1 = "!"
     execute(mumbler_task, word1=word1)
     results = execute(aggregate, word1=word1)
-    print("Word for Next Iteration: {0}".format(results))
+    word1 = results[gpfs1].split("\t")[2]
+    print("Word for Next Iteration: {0}".format(word1))
 
 if __name__ == '__main__':
     controller()
