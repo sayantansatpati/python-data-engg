@@ -22,12 +22,12 @@ def aggregate(word1, hosts, zip_dir=ZIP_DIR):
     for k,v in chain(l[0].iteritems(), l[1].iteritems(), l[2].iteritems()):
         dd_merged[k] += v
 
-    pprint.pprint(dd_merged)
+    #pprint.pprint(dd_merged)
     print("Cross Checking Counts of Word: {0}".format(word1))
     print(l[0].get(word1))
     print(l[1].get(word1))
     print(l[2].get(word1))
-    #print(dd_merged.get(word1))
+    print(dd_merged.get(word1))
     assert l[0].get(word1) + l[1].get(word1) + l[2].get(word1) == dd_merged.get(word1)
 
     random_key = random.choice(dd_merged.keys())
@@ -35,7 +35,8 @@ def aggregate(word1, hosts, zip_dir=ZIP_DIR):
     print("Random Key: {0}, Value: {1}, Probability: {2}".format(random_key,
                                                                  random_key_value,
                                                                  (random_key_value * 1.0)/dd_merged.get(word1)))
-    print random_key
+    # Returns the random_key for next iteration
+    return random_key
 
 
 if __name__ == '__main__':
