@@ -53,14 +53,14 @@ def aggregate(word1):
 
     cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(env.hosts)]
     with cd(SCRIPT_DIR):
-        run(" ".join(cmd))
+        return run(" ".join(cmd))
 
 
 def controller():
     word1 = "!"
     execute(mumbler_task, word1=word1)
-    word1 = execute(aggregate, word1=word1)
-    print("Word for Next Iteration: {0}".format(word1))
+    results = execute(aggregate, word1=word1)
+    print("Word for Next Iteration: {0}".format(results))
 
 if __name__ == '__main__':
     controller()
