@@ -42,11 +42,11 @@ def mumbler_task(word1):
 
 
 @task
-@runs_once
+#@runs_once
 @hosts(gpfs1)
 def aggregate(word1):
     with cd("/gpfs/gpfsfpo"):
-        run("du -sm")
+        local("du -sm")
 
     with cd("/gpfs/gpfsfpo/ngrams/output"):
         local("ls -lh")
