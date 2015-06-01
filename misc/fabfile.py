@@ -45,18 +45,18 @@ def mumbler_task(word1):
 @runs_once
 @hosts(gpfs1)
 def aggregate(word1):
-    #with cd("/gpfs/gpfsfpo"):
-    #    run("du -sm")
+    with cd("/gpfs/gpfsfpo"):
+        run("du -sm")
 
     with cd("/gpfs/gpfsfpo/ngrams/output"):
-        run("ls -lh")
+        local("ls -lh")
 
     cmd = ["python", "mumbler_aggregator.py", word1, ZIP_DIR, ",".join(HOSTS)]
     with cd(SCRIPT_DIR):
-        run(" ".join(cmd))
+        local(" ".join(cmd))
 
     with cd("/gpfs/gpfsfpo/ngrams/output"):
-        return run("tail -1 mumbler_output.txt")
+        return local("tail -1 mumbler_output.txt")
 
 
 def controller():
