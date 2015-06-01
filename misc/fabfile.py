@@ -57,8 +57,9 @@ def aggregate(word1):
 
 
 def controller():
-    execute(mumbler_task, word1="!")
-    execute(aggregate, word1="!")
+    word1 = "!"
+    execute(mumbler_task, word1=word1)
+    execute(aggregate, word1=word1)
 
 if __name__ == '__main__':
     controller()
