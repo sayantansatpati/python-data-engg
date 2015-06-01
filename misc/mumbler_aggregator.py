@@ -18,7 +18,7 @@ def aggregate(hosts, zip_dir=ZIP_DIR):
         l.append(pickle.load(open(os.path.join(ZIP_DIR, OUT_DIR, f_name))))
 
     dd_merged = defaultdict(int)
-    for k,v in chain([dd.iteritems() for dd in l]):
+    for k,v in chain(l[0].iteritems(), l[1].iteritems(), l[2].iteritems()):
         dd_merged[k].update(v)
 
     pprint.pprint(dd_merged)
