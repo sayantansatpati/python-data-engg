@@ -6,6 +6,7 @@ import pickle
 import pprint
 from collections import defaultdict
 from itertools import chain
+import random
 
 OUT_DIR = "output"
 ZIP_DIR = "/gpfs/gpfsfpo/ngrams"
@@ -22,10 +23,18 @@ def aggregate(word1, hosts, zip_dir=ZIP_DIR):
         dd_merged[k] += v
 
     pprint.pprint(dd_merged)
+    print("Cross Checking Counts of Word: {0}".format(word1))
     print(l[0].get(word1))
     print(l[1].get(word1))
     print(l[2].get(word1))
     print(dd_merged.get(word1))
+    assert l[0].get(word1) + l[1].get(word1) + l[2].get(word1) == dd_merged.get(word1)
+
+    random_key = random.choice(dd_merged.keys())
+    random_key_value = dd_merged.get(random_key)
+    print("Random Key: {0}, Value: {1}, Probability: {2}".format(random_key,
+                                                                 random_key_value,
+                                                                 random_key_value/dd_merged.get(word1)))
 
 
 if __name__ == '__main__':
