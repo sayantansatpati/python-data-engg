@@ -17,7 +17,7 @@ COUNT_KEY = "C-O-U-N-T"
 m = 1000000
 
 # Dict word:counts for All Zip Files
-dd = defaultdict(int)
+dd = defaultdict(lambda: defaultdict(int))
 
 def preproc(pattern, zip_dir=ZIP_DIR):
     # Create the Files to be processed based on Pattern
@@ -25,9 +25,6 @@ def preproc(pattern, zip_dir=ZIP_DIR):
     f_list = []
     for i in xrange(int(t[0]), int(t[1]) + 1):
         f_list.append(os.path.join(zip_dir, ZIP_FILE.format(i)))
-
-    # Dict word:counts for All Zip Files
-    dd = defaultdict(lambda: defaultdict(int))
 
     for g in f_list:
         print(g)
