@@ -35,7 +35,7 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
     except OSError:
         pass
 
-    with contextlib.closing(zipfile.ZipFile(zip_file, "r")) as z, open(out_file, "a") as out:
+    with contextlib.closing(zipfile.ZipFile(zip_file, "r")) as z:
         # For Each File in the Zip
         for zf in z.filelist:
             cnt = 0
@@ -68,13 +68,13 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
                         e = time.time()
                         print("[{0}] Time Taken(s) so far: {1}".format(pattern, (e-s)))
 
-
                     # For Test
                     #if cnt > (5 * m):
                     #    return
 
+    with open(out_file, "a") as out:
         # Persisting counts to Disk
-        print("[{0}] Persisting Counts to Disk for File: {1}".format(pattern, zf.filename))
+        print("[{0}] Persisting Counts to Disk for File: {1}".format(pattern, out_file))
         # Write results
         for k, v in sorted(dd.iteritems()):
             for k1, v1 in sorted(v.iteritems()):
@@ -104,4 +104,3 @@ if __name__ == '__main__':
     e = time.time()
     print("TOTAL TIME TAKEN (mins): {0}".format((e-s)/60))
 
-    #populate_counts(pattern=sys.argv[1], zip_dir=sys.argv[2])
