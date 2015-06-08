@@ -20,7 +20,6 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
     s = time.time()
 
     zip_file = os.path.join(zip_dir, ZIP_FILE.format(pattern))
-    print "[{0}] Processing Zip File: {1}".format(pattern, zipfile.ZipInfo.filename)
 
     # Dict word:counts for Each Zip File
     dd = defaultdict(lambda: defaultdict(int))
@@ -39,6 +38,7 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
         # For Each File in the Zip
         for zf in z.filelist:
             cnt = 0
+            print("[{0}]Pre-Processing File: {1}".format(pattern, zf.filename))
 
             # Open file
             with contextlib.closing(z.open(zf)) as f:
