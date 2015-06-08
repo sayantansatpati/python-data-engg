@@ -59,7 +59,7 @@ until [  "$cnt" -ge "$count" ]; do
 	rm $aggregate_file
 
 	# Producing Final Output
-	cat $ROOT/gpfs*/out | awk -F'[:]' '{print $2}' | awk -F'[" "\t]' '{array[$1"\t"$2]+=$4} END { for (i in array) {print i"\t" array[i]}}' | sort >> $aggregate_file
+	cat $ROOT/gpfs*/out | awk -F'[" "\t]' '{array[$1"\t"$2]+=$3} END { for (i in array) {print i"\t" array[i]}}' | sort >> $aggregate_file
 	
 	word=$(head -n $(( ( RANDOM % $(cat $aggregate_file | wc -l) )  + 1 )) $aggregate_file | tail -1 | cut -f2)
 	cnt=$(( cnt + 1 ))
