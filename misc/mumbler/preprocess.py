@@ -66,7 +66,7 @@ def populate_counts(pattern, zip_dir=ZIP_DIR):
                         print("[{0}] DefaultDict(counts), Length: {1}, Size: {2}".format(pattern, len(dd), sys.getsizeof(dd)))
                         e = time.time()
                         print("[{0}] Time Taken(s) so far: {1}".format(pattern, (e-s)))
-                        break;  # Test
+                        #break;  # Test
 
     with open(out_file, "a") as out:
         # Persisting counts to Disk
