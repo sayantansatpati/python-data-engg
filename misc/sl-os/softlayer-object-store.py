@@ -16,6 +16,7 @@ def upload_download():
 
     # Delete container (if present)
     try:
+        sl_storage[container].delete_all_objects()
         sl_storage[container].delete(True)
     except Exception as e:
         print e
@@ -34,7 +35,7 @@ def upload_download():
         sl_storage[container][file_name].load_from_filename(f)
         e = time.time()
         print("Time Taken(s): {0}".format(e-s))
-        print("Upload Transfer Rate: {0}".format(1024*1024*1024/(e-s)))
+        print("Upload Transfer Rate (KB/sec): {0}".format(1024*1024*1.0/(e-s)))
 
         print(sl_storage[container].objects())
 
